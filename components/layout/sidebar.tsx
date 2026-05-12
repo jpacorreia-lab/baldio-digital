@@ -24,7 +24,7 @@ const items = [
   { href: "/cadernos-eleitorais", label: "Cadernos eleitorais", icon: Vote },
   { href: "/assembleias", label: "Assembleias", icon: Landmark },
   { href: "/reunioes-executivo", label: "Reuniões executivo", icon: CircleCheckBig },
-  { href: "#", label: "Atas", icon: BookOpen, disabled: true },
+  { href: "/atas", label: "Atas", icon: BookOpen },
   { href: "#", label: "Deliberações", icon: Gavel, disabled: true },
   { href: "#", label: "Pedidos", icon: ClipboardList, disabled: true },
   { href: "#", label: "Pastoreio", icon: ShieldCheck, disabled: true },
