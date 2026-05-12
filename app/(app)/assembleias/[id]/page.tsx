@@ -1,4 +1,4 @@
-import { Download, FileCheck2 } from "lucide-react";
+import { Download, FileCheck2, FileText } from "lucide-react";
 import { notFound } from "next/navigation";
 import { markEditalEmitido } from "@/app/(app)/assembleias/actions";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -40,6 +40,10 @@ export default async function AssembleiaPage({ params }: AssembleiaPageProps) {
             <Download className="h-4 w-4" />
             Descarregar edital
           </ButtonLink>
+          <ButtonLink href={`/atas/assembleia/${assembleia.id}/html`} variant="secondary">
+            <FileText className="h-4 w-4" />
+            Gerar ata
+          </ButtonLink>
           <form action={emitAction}>
             <Button type="submit" variant="secondary">
               <FileCheck2 className="h-4 w-4" />
@@ -51,25 +55,17 @@ export default async function AssembleiaPage({ params }: AssembleiaPageProps) {
 
       <section className="grid gap-4 rounded-md border border-line bg-white p-6 shadow-soft md:grid-cols-3">
         <div>
-          <p className="text-xs font-semibold uppercase text-stone-500">
-            Data-limite para edital
-          </p>
-          <p className="mt-1 font-semibold text-ink">
-            {formatDatePt(editalDeadline(assembleia.data))}
-          </p>
+          <p className="text-xs font-semibold uppercase text-stone-500">Data-limite para edital</p>
+          <p className="mt-1 font-semibold text-ink">{formatDatePt(editalDeadline(assembleia.data))}</p>
         </div>
         <div>
           <p className="text-xs font-semibold uppercase text-stone-500">Estado</p>
           <p className="mt-1 font-semibold text-ink">{assembleia.estado}</p>
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase text-stone-500">
-            Edital emitido em
-          </p>
+          <p className="text-xs font-semibold uppercase text-stone-500">Edital emitido em</p>
           <p className="mt-1 font-semibold text-ink">
-            {assembleia.edital_emitido_em
-              ? formatDatePt(assembleia.edital_emitido_em)
-              : "Ainda não emitido"}
+            {assembleia.edital_emitido_em ? formatDatePt(assembleia.edital_emitido_em) : "Ainda não emitido"}
           </p>
         </div>
       </section>
