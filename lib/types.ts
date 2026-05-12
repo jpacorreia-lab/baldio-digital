@@ -15,6 +15,24 @@ export type ComparteEstado =
 export type AssembleiaTipo = "ordinaria" | "extraordinaria";
 export type AssembleiaEstado = "rascunho" | "convocada" | "realizada" | "cancelada";
 export type ReuniaoExecutivoEstado = "rascunho" | "realizada" | "arquivada";
+export type AtaEstado =
+  | "rascunho"
+  | "em_revisao"
+  | "aprovada"
+  | "publicada"
+  | "retificada"
+  | "arquivada";
+export type OrgaoAta =
+  | "assembleia_compartes"
+  | "conselho_diretivo"
+  | "comissao_fiscalizacao";
+export type DeliberacaoEstado =
+  | "rascunho"
+  | "aprovada"
+  | "rejeitada"
+  | "sem_votacao"
+  | "retificada"
+  | "arquivada";
 
 export type Organization = {
   id: string;
@@ -85,6 +103,44 @@ export type ReuniaoExecutivo = {
   updated_at: string;
 };
 
+export type Ata = {
+  id: string;
+  organization_id: string;
+  assembleia_id: string | null;
+  reuniao_executivo_id: string | null;
+  numero: number;
+  ano: number;
+  orgao: OrgaoAta;
+  nome_baldio: string;
+  data: string;
+  hora_inicio: string;
+  hora_encerramento: string | null;
+  local: string;
+  ordem_trabalhos: string;
+  presencas: string | null;
+  quorum: string | null;
+  pontos_discutidos: string | null;
+  documentos_anexos: string | null;
+  assinaturas: string | null;
+  estado: AtaEstado;
+  created_at: string;
+  updated_at: string;
+};
+
+export type Deliberacao = {
+  id: string;
+  organization_id: string;
+  ata_id: string;
+  ponto_ordem: number;
+  titulo_ponto: string | null;
+  texto: string;
+  resultado_votacao: string | null;
+  maioria_exigida: string | null;
+  estado: DeliberacaoEstado;
+  created_at: string;
+  updated_at: string;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -114,6 +170,42 @@ export type Database = {
         };
         Update: Partial<Comparte>;
       };
+      assembleias: {
+        Row: Assembleia;
+        Insert: Omit<Assembleia, "id" | "created_at" | "updated_at"> & {
+          id?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Assembleia>;
+      };
+      reunioes_executivo: {
+        Row: ReuniaoExecutivo;
+        Insert: Omit<ReuniaoExecutivo, "id" | "created_at" | "updated_at"> & {
+          id?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<ReuniaoExecutivo>;
+      };
+      atas: {
+        Row: Ata;
+        Insert: Omit<Ata, "id" | "created_at" | "updated_at"> & {
+          id?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Ata>;
+      };
+      deliberacoes: {
+        Row: Deliberacao;
+        Insert: Omit<Deliberacao, "id" | "created_at" | "updated_at"> & {
+          id?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Deliberacao>;
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -129,6 +221,12 @@ export type Database = {
     Enums: {
       user_role: UserRole;
       comparte_estado: ComparteEstado;
+      assembleia_tipo: AssembleiaTipo;
+      assembleia_estado: AssembleiaEstado;
+      reuniao_executivo_estado: ReuniaoExecutivoEstado;
+      ata_estado: AtaEstado;
+      orgao_ata: OrgaoAta;
+      deliberacao_estado: DeliberacaoEstado;
     };
     CompositeTypes: Record<string, never>;
   };
